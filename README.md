@@ -80,7 +80,7 @@ flowchart LR
 
 ### Project Demo
 # Video
-[Demo video link](c:\Users\USER\OneDrive\Videos\Screen Recordings\project_demo.mp4.mp4)
+[Demo video link](https://drive.google.com/file/d/1UlhblRotYFqJFTCyT2V8hfrVrvEwsPKl/view?usp=drivesdk)
 
 
 # Additional Demos

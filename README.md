@@ -45,14 +45,14 @@ For Software:
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot1](/landingpage.png)
+*Landing Page*
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot2](/malayalam.png)
+*Malayalam Chat*
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot3](/hindi.png)
+*Hindi Chat*
 
 # Diagrams
 ![Workflow](Add your workflow/architecture diagram here)

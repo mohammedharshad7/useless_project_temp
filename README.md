@@ -1,94 +1,98 @@
-<img width="1280" height="640" alt="git (1)" src="https://github.com/user-attachments/assets/8920b256-2ba8-4988-b824-5351134eb4bd" />
+<img width="1280" height="640" alt="MYAW project banner" src="https://github.com/user-attachments/assets/8920b256-2ba8-4988-b824-5351134eb4bd" />
 
-
-
-# [Project Name] 🎯
-
+# MYAW 🎯
 
 ## Basic Details
-### Team Name: [Name]
-
+### Team Name: COMPOUND V
 
 ### Team Members
-- Team Lead: [Mohammed Harshad] - [KMEA Engineering College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: Mohammed Harshad - KMEA Engineering College
+- Member 2: Mohammed Aman T Z - KMEA Engineering College
 
 ### Project Description
-[2-3 lines about what your project does]
+MYAW is a playful cat-themed translator that turns everyday text into adorable cat-style output. It supports English, Malayalam, and Hindi, making language translation feel fun, expressive, and a little ridiculous.
+
+The app comes with a cat mascot, mood-based personality toggles, and voice input/output support to create a friendly and interactive experience.
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+Humans were tired of standard, boring translation tools that never captured personality, emotion, or pure nonsense in a cute way. We needed a translator that could make a simple sentence sound like a cat had written it.
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+MYAW translates user input into cat-inspired phrases while keeping the meaning easy to understand. It adds a cheerful UI, language switching, mood changes, and browser-based voice features so the experience feels more like an interactive toy than a serious app.
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
-
-
+- HTML
+- CSS
+- JavaScript
+- Browser Speech Recognition API
+- Browser Speech Synthesis API
+- Responsive web design for mobile-friendly interface
 
 ### Implementation
 For Software:
 # Installation
-[commands]
+```bash
+git clone https://github.com/<your-username>/goldencat.git
+cd goldencat
+```
 
 # Run
-[commands]
+```bash
+python -m http.server 8000
+```
+Then open the app in a browser at:
+```text
+http://localhost:8000
+```
+You can also open `index.html` directly in a browser for a quick preview.
 
 ### Project Documentation
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](/landingpage.png)
+![Landing Page](landingpage.png)
 *Landing Page*
 
-![Screenshot2](/malayalam.png)
+![Malayalam Translation](malayalam.png)
 *Malayalam Chat*
 
-![Screenshot3](/hindi.png)
+![Hindi Translation](hindi.png)
 *Hindi Chat*
 
 # Diagrams
 ```mermaid
 flowchart LR
-    A[User opens the app] --> B[Select language or input text]
-    B --> C[Cat Translator engine]
-    C --> D{Language mode}
-    D -->|English| E[Convert text into cat-style English]
-    D -->|Malayalam| F[Convert text into cat-style Malayalam]
-    D -->|Hindi| G[Convert text into cat-style Hindi]
-    E --> H[Render translated output in UI]
+    A[User opens MYAW] --> B[Choose language or speak input]
+    B --> C[Text processing layer]
+    C --> D{Selected language}
+    D -->|English| E[Translate into cat-style English]
+    D -->|Malayalam| F[Translate into cat-style Malayalam]
+    D -->|Hindi| G[Translate into cat-style Hindi]
+    E --> H[Display translated result in chat UI]
     F --> H
     G --> H
-    H --> I[User reads, copies, or shares result]
-    J[Cat-themed interface and mascot] --> A
+    H --> I[User can copy, listen, or speak again]
+    J[Cat mascot and mood settings] --> A
 ```
-*This workflow shows how user input is processed by the translator, adapted to different language modes, and presented in a playful cat-themed interface.*
+*This workflow shows how user input flows through the language modes, gets transformed into cat-style text, and is displayed in the interactive chat interface.*
 
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+[Demo video link will be added here]
+*The demo video explains the app flow, language switching, and the cat-themed interaction experience.*
 
 # Additional Demos
-[Add any extra demo materials/links]
+[Additional screenshots, recordings, or demo links will be added here]
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- Mohammed Harshad: UI design, frontend layout, project planning, and team coordination
+- Mohammed Aman T Z: app logic, language handling, testing, and documentation support
 
 ---
-Made with ❤️ at TinkerHub Useless Projects 
+Made with ❤️ at TinkerHub Useless Projects
 
 ![Static Badge](https://img.shields.io/badge/TinkerHub-24?color=%23000000&link=https%3A%2F%2Fwww.tinkerhub.org%2F)
 ![Static Badge](https://img.shields.io/badge/UselessProjects--26-26?link=https%3A%2F%2Ftinkerhub.org%2Fevents%2F1M8ORET9A1%2Fuseless-projects-3.0)
-
-
 

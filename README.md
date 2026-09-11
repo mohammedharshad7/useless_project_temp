@@ -84,7 +84,7 @@ flowchart LR
 *The demo video explains the app flow, language switching, and the cat-themed interaction experience.*
 
 # Additional Demos
-[Additional screenshots, recordings, or demo links will be added here]
+[Live Link](https://mohammedharshad7.github.io/useless_project_temp/)
 
 ## Team Contributions
 - Mohammed Harshad: UI design, frontend layout, project planning, and team coordination

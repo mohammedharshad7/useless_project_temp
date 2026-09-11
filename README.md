@@ -80,8 +80,8 @@ flowchart LR
 
 ### Project Demo
 # Video
-[Demo video link will be added here]
-*The demo video explains the app flow, language switching, and the cat-themed interaction experience.*
+[Demo video link](c:\Users\USER\OneDrive\Videos\Screen Recordings\project_demo.mp4.mp4)
+
 
 # Additional Demos
 [Live Link](https://mohammedharshad7.github.io/useless_project_temp/)

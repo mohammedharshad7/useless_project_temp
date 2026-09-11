@@ -55,9 +55,21 @@ For Software:
 *Hindi Chat*
 
 # Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
-
+```mermaid
+flowchart LR
+    A[User opens the app] --> B[Select language or input text]
+    B --> C[Cat Translator engine]
+    C --> D{Language mode}
+    D -->|English| E[Convert text into cat-style English]
+    D -->|Malayalam| F[Convert text into cat-style Malayalam]
+    D -->|Hindi| G[Convert text into cat-style Hindi]
+    E --> H[Render translated output in UI]
+    F --> H
+    G --> H
+    H --> I[User reads, copies, or shares result]
+    J[Cat-themed interface and mascot] --> A
+```
+*This workflow shows how user input is processed by the translator, adapted to different language modes, and presented in a playful cat-themed interface.*
 
 ### Project Demo
 # Video

@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>myaw 🐱 — Cat Translator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF3E8;
+    --cream-deep:#FFE3CF;
+    --plum:#34222F;
+    --plum-soft:#6B5866;
+    --surface:#FFFFFF;
+    --line:rgba(52,34,47,0.10);
+    --coral:#FF6B6B;
+    --coral-dark:#E14F63;
+    --shadow:0 14px 30px -12px rgba(52,34,47,0.25);
+    --mood:#FF5D8F;
+    --mood-soft:#FFE1EC;
+    --radius-lg:28px;
+    --radius-md:18px;
+    --radius-sm:12px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:'Nunito',sans-serif;
+    color:var(--plum);
+    background:
+      radial-gradient(circle at 15% 0%, var(--cream-deep), transparent 55%),
+      radial-gradient(circle at 85% 100%, #E9E2FF, transparent 55%),
+      var(--cream);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:0;
+  }
+  button{font-family:inherit;}
+  :focus-visible{outline:3px solid var(--coral-dark); outline-offset:2px;}
+
+  .phone{
+    width:100%;
+    max-width:530px;
+    min-height:100vh;
+    background:var(--surface);
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    box-shadow:var(--shadow);
+  }
+  @media (min-width:600px){
+    body{padding:28px 16px;}
+    .phone{min-height:calc(100vh - 56px); border-radius:32px; overflow:hidden;}
+  }
+
+  /* ---------- HERO / HEADER ---------- */
+  .hero{
+    padding:22px 20px 16px;
+    background:linear-gradient(180deg, var(--mood-soft), transparent 90%);
+    border-bottom:1px solid var(--line);
+    transition:background .6s ease;
+  }
+  h1{
+    font-family:'Baloo 2', sans-serif;
+    font-size:clamp(28px,7vw,34px);
+    margin:0 0 2px;
+    font-weight:800;
+    letter-spacing:-0.5px;
+  }
+  .tagline{
+    margin:0 0 16px;
+    color:var(--plum-soft);
+    font-size:14.5px;
+    font-weight:600;
+  }
+
+  .contact-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .cat-hero{
+    position:relative;
+    width:76px;height:76px;
+    flex:0 0 auto;
+    animation:float 3.4s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion:reduce){.cat-hero{animation:none;}}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+
+  .cat-hero .head{
+    position:absolute; inset:10px 4px 4px 4px;
+    background:var(--mood);
+    border-radius:46% 46% 50% 50%;
+    transition:background .5s ease;
+    box-shadow:inset 0 -6px 10px rgba(0,0,0,0.08);
+  }
+  .cat-hero .ear{
+    position:absolute; top:0; width:0; height:0;
+    border-left:15px solid transparent;
+    border-right:15px solid transparent;
+    border-bottom:26px solid var(--mood);
+    transition:border-bottom-color .5s ease, transform .3s ease;
+  }
+  .cat-hero .ear::after{
+    content:"";
+    position:absolute; top:9px; left:-8px;
+    width:0;height:0;
+    border-left:7px solid transparent;
+    border-right:7px solid transparent;
+    border-bottom:13px solid #FFD6E4;
+  }
+  .cat-hero .ear.l{left:2px; transform:rotate(-18deg); animation:twitchL 5s ease-in-out infinite;}
+  .cat-hero .ear.r{right:2px; transform:rotate(18deg) scaleX(-1); animation:twitchR 6.5s ease-in-out infinite;}
+  @keyframes twitchL{0%,88%,100%{transform:rotate(-18deg);}90%{transform:rotate(-30deg);}94%{transform:rotate(-14deg);}}
+  @keyframes twitchR{0%,90%,100%{transform:rotate(18deg) scaleX(-1);}92%{transform:rotate(6deg) scaleX(-1);}96%{transform:rotate(22deg) scaleX(-1);}}
+
+  .cat-hero .eye{
+    position:absolute; top:36px; width:9px; height:9px;
+    background:var(--plum); border-radius:50%;
+    animation:blink 4.2s ease-in-out infinite;
+  }
+  .cat-hero .eye.l{left:22px;} .cat-hero .eye.r{right:22px;}
+  @keyframes blink{0%,92%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
+
+  .cat-hero .nose{
+    position:absolute; top:48px; left:50%; transform:translateX(-50%);
+    width:0;height:0;
+    border-left:4px solid transparent;
+    border-right:4px solid transparent;
+    border-top:5px solid #FFD6E4;
+  }
+  .cat-hero .whisker{
+    position:absolute; top:50px; width:16px; height:1.5px;
+    background:rgba(52,34,47,0.35); border-radius:2px;
+  }
+  .cat-hero .whisker.l1{left:-6px; transform:rotate(-6deg);}
+  .cat-hero .whisker.l2{left:-6px; top:55px; transform:rotate(6deg);}
+  .cat-hero .whisker.r1{right:-6px; transform:rotate(6deg);}
+  .cat-hero .whisker.r2{right:-6px; top:55px; transform:rotate(-6deg);}
+
+  /* mood extras */
+  .cat-hero .extra{position:absolute; font-size:13px; opacity:0; transition:opacity .3s;}
+  .cat-hero.mood-cute .extra.heart{opacity:1; top:-6px; right:2px; animation:bob 2s ease-in-out infinite;}
+  .cat-hero.mood-lazy .extra.z{opacity:1; top:-4px; right:-4px; font-family:'Baloo 2'; font-weight:700; color:var(--mood); animation:bob 2.6s ease-in-out infinite;}
+  .cat-hero.mood-dramatic .extra.spark{opacity:1; top:-8px; left:-2px; animation:bob 1.6s ease-in-out infinite;}
+  .cat-hero.mood-angry .brow{content:""; position:absolute; top:32px; width:11px; height:2px; background:var(--plum); border-radius:2px;}
+  .cat-hero.mood-angry .brow.l{left:19px; transform:rotate(18deg);}
+  .cat-hero.mood-angry .brow.r{right:19px; transform:rotate(-18deg);}
+  .cat-hero.mood-sassy .brow.l{position:absolute; top:29px; left:20px; width:10px; height:2px; background:var(--plum); border-radius:2px; transform:rotate(-22deg);}
+  .cat-hero.mood-chaotic .ring{position:absolute; inset:-6px; border-radius:50%; border:2px dashed var(--mood); animation:spin 4s linear infinite, huecycle 4s linear infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @keyframes huecycle{to{filter:hue-rotate(360deg);}}
+
+  .contact-info{flex:1; min-width:0;}
+  .contact-name{font-family:'Baloo 2'; font-weight:700; font-size:17px;}
+  .contact-status{
+    display:flex; align-items:center; gap:6px;
+    font-size:13px; color:var(--plum-soft); font-weight:600;
+    margin-top:2px;
+  }
+  .dot{width:8px;height:8px;border-radius:50%; background:var(--mood); flex:0 0 auto; transition:background .5s;}
+
+  .clear-btn{
+    margin-left:auto;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--plum-soft);
+    font-weight:700;
+    font-size:12.5px;
+    padding:8px 12px;
+    border-radius:999px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .clear-btn:hover{box-shadow:var(--shadow); transform:translateY(-1px);}
+  .clear-btn:active{transform:translateY(0);}
+
+  /* ---------- CONTROL DECK ---------- */
+  .deck{padding:14px 20px 4px;}
+  .deck-label{font-size:12.5px; font-weight:700; color:var(--plum-soft); margin:10px 0 7px;}
+  .chip-row{display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none;}
+  .chip-row::-webkit-scrollbar{display:none;}
+  .chip{
+    flex:0 0 auto;
+    border:1.5px solid var(--line);
+    background:var(--surface);
+    color:var(--plum);
+    font-weight:700;
+    font-size:13.5px;
+    padding:8px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    display:flex; align-items:center; gap:6px;
+    transition:all .18s ease;
+  }
+  .chip:hover{transform:translateY(-1px);}
+  .chip[aria-pressed="true"]{
+    background:var(--chip-color, var(--coral));
+    border-color:var(--chip-color, var(--coral));
+    color:#fff;
+    box-shadow:0 6px 14px -6px var(--chip-color, var(--coral));
+  }
+
+  /* ---------- CHAT ---------- */
+  .chat{
+    flex:1;
+    overflow-y:auto;
+    padding:16px 16px 8px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    min-height:180px;
+  }
+  .welcome{
+    text-align:center;
+    color:var(--plum-soft);
+    font-size:14px;
+    font-weight:600;
+    padding:30px 20px;
+    line-height:1.6;
+  }
+  .welcome span{font-size:30px; display:block; margin-bottom:6px;}
+
+  .msg-row{display:flex; gap:8px; max-width:100%;}
+  .msg-row.human{justify-content:flex-end;}
+  .msg-row.cat{justify-content:flex-start; align-items:flex-end;}
+
+  .avatar-mini{
+    width:30px;height:30px;border-radius:50%;
+    background:var(--mood);
+    display:flex; align-items:center; justify-content:center;
+    font-size:15px; flex:0 0 auto;
+    transition:background .5s;
+  }
+
+  .bubble{
+    max-width:76%;
+    padding:11px 15px;
+    border-radius:var(--radius-md);
+    font-size:15px;
+    line-height:1.45;
+    font-weight:600;
+    word-wrap:break-word;
+    animation:pop .25s ease;
+  }
+  @keyframes pop{from{transform:scale(.9); opacity:0;} to{transform:scale(1); opacity:1;}}
+  .bubble.human{
+    background:var(--coral);
+    color:#fff;
+    border-bottom-right-radius:6px;
+  }
+  .bubble-wrap.cat{max-width:76%;}
+  .bubble.cat{
+    background:var(--mood-soft);
+    color:var(--plum);
+    border-bottom-left-radius:6px;
+    border:1.5px solid color-mix(in srgb, var(--mood) 35%, transparent);
+    transition:background .3s, border-color .3s;
+  }
+  .bubble.cat.speaking{
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--mood) 40%, transparent);
+    animation:pop .25s ease, pulse 1.1s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.015);}}
+  @media (prefers-reduced-motion:reduce){.bubble.cat.speaking{animation:pop .25s ease;}}
+
+  .reaction-badge{font-size:13px; margin-left:6px;}
+
+  .msg-meta{
+    display:flex; align-items:center; gap:8px;
+    margin-top:6px; flex-wrap:wrap;
+  }
+  .mini-btn{
+    border:none;
+    background:rgba(52,34,47,0.06);
+    color:var(--plum);
+    width:26px;height:26px;
+    border-radius:50%;
+    font-size:12px;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .15s ease;
+  }
+  .mini-btn:hover{background:rgba(52,34,47,0.13);}
+  .mini-btn:disabled{opacity:.35; cursor:not-allowed;}
+  .mini-btn.copy-ok{background:#6BCB77; color:#fff;}
+  .tag-pill{
+    font-size:10.5px; font-weight:800; color:var(--plum-soft);
+    background:rgba(52,34,47,0.06);
+    padding:3px 8px; border-radius:999px;
+  }
+
+  .typing-row{display:flex; align-items:center; gap:8px; padding-left:2px;}
+  .typing-bubble{
+    background:var(--mood-soft);
+    border-radius:var(--radius-md);
+    border-bottom-left-radius:6px;
+    padding:12px 16px;
+    display:flex; gap:4px;
+  }
+  .typing-bubble span{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--mood);
+    animation:tdot 1s infinite ease-in-out;
+  }
+  .typing-bubble span:nth-child(2){animation-delay:.15s;}
+  .typing-bubble span:nth-child(3){animation-delay:.3s;}
+  @keyframes tdot{0%,60%,100%{transform:translateY(0); opacity:.5;}30%{transform:translateY(-4px); opacity:1;}}
+
+  /* ---------- INPUT DOCK ---------- */
+  .dock{
+    border-top:1px solid var(--line);
+    background:var(--surface);
+    padding:12px 16px calc(14px + env(safe-area-inset-bottom));
+  }
+  .stt-note{
+    font-size:12px; color:var(--plum-soft); font-weight:600;
+    margin-bottom:8px; min-height:16px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .stt-note.live{color:var(--coral-dark);}
+  .stt-note .rec-dot{width:7px;height:7px;border-radius:50%; background:var(--coral-dark); animation:recpulse 1s infinite;}
+  @keyframes recpulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+  .input-row{display:flex; align-items:flex-end; gap:10px;}
+  .mic-btn{
+    flex:0 0 auto;
+    width:52px;height:52px;
+    border-radius:50%;
+    border:none;
+    background:linear-gradient(160deg,var(--coral),var(--coral-dark));
+    color:#fff;
+    font-size:22px;
+    cursor:pointer;
+    box-shadow:0 8px 16px -6px rgba(225,79,99,0.55);
+    transition:transform .15s ease, box-shadow .15s ease;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mic-btn:hover{transform:translateY(-2px);}
+  .mic-btn:active{transform:translateY(0) scale(.96);}
+  .mic-btn.listening{
+    background:linear-gradient(160deg,#FF3B5C,#C81E4B);
+    animation:mic-pulse 1.1s ease-in-out infinite;
+  }
+  .mic-btn:disabled{background:#D8CFCF; box-shadow:none; cursor:not-allowed;}
+  @keyframes mic-pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,59,92,.45);}50%{box-shadow:0 0 0 12px rgba(255,59,92,0);}}
+
+  .text-field{
+    flex:1;
+    resize:none;
+    border:1.5px solid var(--line);
+    background:var(--cream);
+    border-radius:var(--radius-sm);
+    padding:12px 14px;
+    font-family:'Nunito',sans-serif;
+    font-size:15px;
+    font-weight:600;
+    color:var(--plum);
+    max-height:90px;
+    min-height:48px;
+    line-height:1.35;
+  }
+  .text-field:focus{border-color:var(--coral); background:#fff;}
+
+  .send-btn{
+    flex:0 0 auto;
+    border:none;
+    background:var(--plum);
+    color:#fff;
+    font-family:'Baloo 2';
+    font-weight:700;
+    font-size:14px;
+    padding:0 18px;
+    height:48px;
+    border-radius:var(--radius-sm);
+    cursor:pointer;
+    white-space:nowrap;
+    transition:transform .15s ease;
+  }
+  .send-btn:hover{transform:translateY(-2px);}
+  .send-btn:active{transform:translateY(0);}
+  .send-btn:disabled{background:#C8BFC5; cursor:not-allowed; transform:none;}
+
+  .support-note{
+    text-align:center; font-size:11.5px; color:var(--plum-soft);
+    opacity:.75; margin-top:10px; font-weight:600;
+  }
+
+  .toast{
+    position:fixed;
+    bottom:18px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--plum); color:#fff;
+    padding:9px 16px; border-radius:999px;
+    font-size:13px; font-weight:700;
+    opacity:0; pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+    z-index:50;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  @media (max-width:400px){
+    .bubble, .bubble-wrap.cat{max-width:85%;}
+  }
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- HERO -->
+  <header class="hero" id="hero">
+    <h1>myaw 🐱</h1>
+    <p class="tagline">Cat Translator — say anything, get catified.</p>
+
+    <div class="contact-row">
+      <div class="cat-hero mood-cute" id="catHero" aria-hidden="true">
+        <div class="ring" id="chaosRing" style="display:none"></div>
+        <div class="ear l"></div>
+        <div class="ear r"></div>
+        <div class="head"></div>
+        <div class="eye l"></div>
+        <div class="eye r"></div>
+        <span class="brow l" style="display:none"></span>
+        <span class="brow r" style="display:none"></span>
+        <div class="nose"></div>
+        <div class="whisker l1"></div>
+        <div class="whisker l2"></div>
+        <div class="whisker r1"></div>
+        <div class="whisker r2"></div>
+        <span class="extra heart">💗</span>
+        <span class="extra z">Zz</span>
+        <span class="extra spark">✨</span>
+      </div>
+      <div class="contact-info">
+        <div class="contact-name">Momo</div>
+        <div class="contact-status"><span class="dot" id="moodDot"></span><span id="moodText">feeling extra cuddly 😻</span></div>
+      </div>
+      <button class="clear-btn" id="clearBtn" title="Clear the conversation">Clear history</button>
+    </div>
+  </header>
+
+  <!-- CONTROLS -->
+  <section class="deck">
+    <div class="deck-label">You're speaking</div>
+    <div class="chip-row" id="langChips" role="group" aria-label="Input language"></div>
+    <div class="deck-label">Momo's mood</div>
+    <div class="chip-row" id="moodChips" role="group" aria-label="Cat personality"></div>
+  </section>
+
+  <!-- CHAT -->
+  <main class="chat" id="chat">
+    <div class="welcome" id="welcomeMsg">
+      <span>🐾</span>
+      Type something, or tap the mic, and Momo will translate it into Cat.
+    </div>
+  </main>
+
+  <!-- INPUT DOCK -->
+  <div class="dock">
+    <div class="stt-note" id="sttNote"></div>
+    <div class="input-row">
+      <button class="mic-btn" id="micBtn" title="Speak your message">🎤</button>
+      <textarea class="text-field" id="textInput" rows="1" placeholder="Type something…"></textarea>
+      <button class="send-btn" id="sendBtn">Translate to Cat 🐾</button>
+    </div>
+    <div class="support-note" id="supportNote"></div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* =========================================================
+     DATA: languages & personalities
+  ========================================================= */
+  const LANGS = [
+    { key:"en", label:"English", flag:"🇬🇧", bcp:"en-US", placeholder:"Type something…" },
+    { key:"ml", label:"Malayalam", flag:"🇮🇳", bcp:"ml-IN", placeholder:"എന്തെങ്കിലും ടൈപ്പ് ചെയ്യൂ…" },
+    { key:"hi", label:"Hindi", flag:"🇮🇳", bcp:"hi-IN", placeholder:"कुछ भी लिखिए…" }
+  ];
+
+  const SYL_POOL = ["meow","mrrp","nyaa","mew","prrr","mraow","nya","purr","mrow","nyan","chirrp","meowmeow","prrmew","nyaon","myaa","mrr","miew","nyow"];
+
+  const PERSONALITIES = {
+    cute: {
+      label:"Cute", emoji:"😻", color:"#FF5D8F",
+      pool:["nyaa","mew","meow","purr","nyan","mew mew","myaa"],
+      pitch:[1.55,1.9], rate:[1.0,1.2],
+      statuses:["feeling extra cuddly 😻","wants headpats 💗","purring softly ~","being adorable on purpose"],
+      reactions:["😻","🐾","😺","💗"],
+      build(tokens){ return tokens.map(t=> Math.random()<0.35 ? t+"~" : t).join(" ") + (Math.random()<0.5? " ~":""); }
+    },
+    angry: {
+      label:"Angry", emoji:"😾", color:"#E4572E",
+      pool:["MRAOW","HISS","MEOW","GRR-MEOW","MROW","SPFFT"],
+      pitch:[0.55,0.85], rate:[1.25,1.55],
+      statuses:["stepped on a tail 😾","not in the mood 🙀","hissing at the vacuum","plotting revenge"],
+      reactions:["😾","🙀","😼"],
+      build(tokens){ return tokens.map(t=>t.toUpperCase()).join(" ") + (Math.random()<0.6 ? "!!" : "!"); }
+    },
+    lazy: {
+      label:"Lazy", emoji:"😴", color:"#5C6B8A",
+      pool:["meow","mrrp","nyaa","prrr","mrow"],
+      pitch:[0.65,0.85], rate:[0.5,0.7],
+      statuses:["half asleep on the sofa","too tired to meow properly","mid-nap, please hold","conserving energy"],
+      reactions:["😴","🐾","😼"],
+      build(tokens){
+        const drawn = tokens.map(t=> t.split("").join("") + (Math.random()<0.5 ? t.slice(-1).repeat(2) : "") );
+        return drawn.join("... ").toLowerCase() + "...";
+      }
+    },
+    sassy: {
+      label:"Sassy", emoji:"😼", color:"#8E5CF2",
+      pool:["mrrp","meow","nyaa","prrr","mrow","tch-meow"],
+      pitch:[1.2,1.55], rate:[1.0,1.2],
+      statuses:["unbothered, moisturized 😼","judging your life choices","too iconic for this","rolling my eyes (all four of them)"],
+      reactions:["😼","😹","🐾"],
+      build(tokens){
+        return tokens.map((t,i)=> i%2===0 ? t[0].toUpperCase()+t.slice(1) : t ).join(" ") + "~ hmph!".replace(" hmph","");
+      }
+    },
+    dramatic: {
+      label:"Dramatic", emoji:"🙀", color:"#F2A93B",
+      pool:["meowwww","nyaaaa","mraow","prrrrr","mewwww","nyaon"],
+      pitch:[1.15,1.5], rate:[0.7,0.9],
+      statuses:["having An Emotion 🙀","the tragedy of an empty bowl","starring in her own opera","gasping theatrically"],
+      reactions:["🙀","😹","😾"],
+      build(tokens){
+        const titled = tokens.map(t=> t.charAt(0).toUpperCase()+t.slice(1));
+        return titled.join(", ") + "... MEOWWW!!!";
+      }
+    },
+    chaotic: {
+      label:"Chaotic", emoji:"🤪", color:"#17BEBB",
+      pool:SYL_POOL,
+      pitch:[0.6,2.0], rate:[0.6,1.6],
+      statuses:["knocked something off the table","zooming for no reason 🐾","possessed by the 3am energy","meowing in morse code"],
+      reactions:["🙀","😹","😺","😾","🐾","😼"],
+      build(tokens){
+        const punct=["!","~","?","!!","...","?!"];
+        return tokens.map(t=>{
+          const chars=t.split("").map(c=> Math.random()<0.5 ? c.toUpperCase() : c.toLowerCase()).join("");
+          return chars + punct[Math.floor(Math.random()*punct.length)];
+        }).join(" ");
+      }
+    }
+  };
+  const PERSONALITY_ORDER = ["cute","angry","lazy","sassy","dramatic","chaotic"];
+
+  /* =========================================================
+     STATE
+  ========================================================= */
+  let currentLang = "en";
+  let currentPersonality = "cute";
+  let history = [];
+  let msgCounter = 0;
+  let speakingId = null;
+  let recognition = null;
+  let listening = false;
+
+  /* =========================================================
+     DOM refs
+  ========================================================= */
+  const $ = id => document.getElementById(id);
+  const chatEl = $("chat");
+  const welcomeMsg = $("welcomeMsg");
+  const textInput = $("textInput");
+  const sendBtn = $("sendBtn");
+  const micBtn = $("micBtn");
+  const sttNote = $("sttNote");
+  const supportNote = $("supportNote");
+  const clearBtn = $("clearBtn");
+  const moodText = $("moodText");
+  const moodDot = $("moodDot");
+  const catHero = $("catHero");
+  const chaosRing = $("chaosRing");
+  const toast = $("toast");
+  const langChips = $("langChips");
+  const moodChips = $("moodChips");
+
+  /* =========================================================
+     BUILD CHIP ROWS
+  ========================================================= */
+  function buildChips(){
+    langChips.innerHTML = LANGS.map(l =>
+      `<button class="chip" data-lang="${l.key}" aria-pressed="${l.key===currentLang}">${l.flag} ${l.label}</button>`
+    ).join("");
+
+    moodChips.innerHTML = PERSONALITY_ORDER.map(key=>{
+      const p = PERSONALITIES[key];
+      return `<button class="chip" data-mood="${key}" style="--chip-color:${p.color}" aria-pressed="${key===currentPersonality}">${p.emoji} ${p.label}</button>`;
+    }).join("");
+
+    langChips.querySelectorAll(".chip").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        currentLang = btn.dataset.lang;
+        langChips.querySelectorAll(".chip").forEach(b=> b.setAttribute("aria-pressed", b===btn));
+        const lang = LANGS.find(l=>l.key===currentLang);
+        textInput.placeholder = lang.placeholder;
+      });
+    });
+
+    moodChips.querySelectorAll(".chip").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        currentPersonality = btn.dataset.mood;
+        moodChips.querySelectorAll(".chip").forEach(b=> b.setAttribute("aria-pressed", b===btn));
+        updateHeroMood();
+      });
+    });
+  }
+
+  function updateHeroMood(randomStatus){
+    const p = PERSONALITIES[currentPersonality];
+    document.documentElement.style.setProperty("--mood", p.color);
+    document.querySelector('.hero').style.setProperty("--mood", p.color);
+    catHero.className = "cat-hero mood-" + currentPersonality;
+    moodDot.style.background = p.color;
+
+    // toggle extras
+    catHero.querySelector(".brow.l").style.display = (currentPersonality==="angry"||currentPersonality==="sassy") ? "block":"none";
+    catHero.querySelector(".brow.r").style.display = currentPersonality==="angry" ? "block":"none";
+    chaosRing.style.display = currentPersonality==="chaotic" ? "block":"none";
+
+    const list = p.statuses;
+    const chosen = randomStatus ? list[Math.floor(Math.random()*list.length)] : list[0];
+    moodText.textContent = chosen + " " + p.emoji;
+  }
+
+  /* =========================================================
+     CAT TRANSLATION ENGINE
+  ========================================================= */
+  function pickPool(personality){
+    const p = PERSONALITIES[personality];
+    // mix personality pool (70%) with general pool (30%) for variety
+    return Math.random() < 0.7 ? p.pool : SYL_POOL;
+  }
+
+  function translateToCat(text, personality){
+    const words = text.trim().split(/\s+/).filter(Boolean);
+    const wCount = Math.max(1, words.length);
+    let base = Math.round(wCount * 0.75) + (Math.floor(Math.random()*3) - 1);
+    base = Math.max(2, Math.min(10, base));
+
+    if(personality === "lazy") base = Math.max(1, Math.round(base * 0.5));
+    if(personality === "dramatic") base = Math.round(base * 1.25) + 1;
+    if(personality === "chaotic") base = Math.round(base * 1.3) + Math.floor(Math.random()*2);
+
+    const tokens = [];
+    for(let i=0;i<base;i++){
+      const pool = pickPool(personality);
+      tokens.push(pool[Math.floor(Math.random()*pool.length)]);
+    }
+
+    const p = PERSONALITIES[personality];
+    const catText = p.build(tokens.slice());
+    return { catText, tokens };
+  }
+
+  function pickReaction(personality){
+    const p = PERSONALITIES[personality];
+    const pool = Math.random() < 0.85 ? p.reactions : ["😺","😾","😹","😼","🐾","🙀"];
+    return pool[Math.floor(Math.random()*pool.length)];
+  }
+
+  /* =========================================================
+     CHAT RENDERING
+  ========================================================= */
+  function scrollChat(){
+    requestAnimationFrame(()=> chatEl.scrollTop = chatEl.scrollHeight);
+  }
+
+  function addHumanBubble(text){
+    welcomeMsg.style.display = "none";
+    const row = document.createElement("div");
+    row.className = "msg-row human";
+    row.innerHTML = `<div class="bubble human"></div>`;
+    row.querySelector(".bubble").textContent = text;
+    chatEl.appendChild(row);
+    scrollChat();
+  }
+
+  function showTyping(){
+    const row = document.createElement("div");
+    row.className = "typing-row";
+    row.id = "typingRow";
+    row.innerHTML = `<div class="avatar-mini" style="background:${PERSONALITIES[currentPersonality].color}">${PERSONALITIES[currentPersonality].emoji}</div>
+      <div class="typing-bubble"><span></span><span></span><span></span></div>`;
+    chatEl.appendChild(row);
+    scrollChat();
+  }
+  function removeTyping(){
+    const row = $("typingRow");
+    if(row) row.remove();
+  }
+
+  function addCatBubble(catText, tokens, personality, reaction){
+    const id = "m" + (++msgCounter);
+    const p = PERSONALITIES[personality];
+    const row = document.createElement("div");
+    row.className = "msg-row cat";
+    row.innerHTML = `
+      <div class="avatar-mini" style="background:${p.color}">${p.emoji}</div>
+      <div class="bubble-wrap cat">
+        <div class="bubble cat" id="bubble-${id}" style="background:${hexToSoft(p.color)}; border-color:${p.color}66;">
+          ${escapeHtml(catText)} <span class="reaction-badge">${reaction}</span>
+        </div>
+        <div class="msg-meta">
+          <span class="tag-pill">${p.label}</span>
+          <button class="mini-btn" data-act="play" data-id="${id}" title="Play">▶️</button>
+          <button class="mini-btn" data-act="pause" data-id="${id}" title="Pause">⏸️</button>
+          <button class="mini-btn" data-act="stop" data-id="${id}" title="Stop">⏹️</button>
+          <button class="mini-btn" data-act="replay" data-id="${id}" title="Replay">🔁</button>
+          <button class="mini-btn" data-act="copy" data-id="${id}" title="Copy translation">📋</button>
+        </div>
+      </div>`;
+    chatEl.appendChild(row);
+    scrollChat();
+
+    history.push({ id, catText, tokens, personality });
+    row.querySelectorAll(".mini-btn").forEach(btn=>{
+      btn.addEventListener("click", ()=> handleMiniAction(btn.dataset.act, btn.dataset.id));
+    });
+    return id;
+  }
+
+  function hexToSoft(hex){
+    // returns a very light tint background for the bubble
+    return `color-mix(in srgb, ${hex} 16%, white)`;
+  }
+
+  function escapeHtml(str){
+    return str.replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+  }
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(()=> toast.classList.remove("show"), 1600);
+  }
+
+  /* =========================================================
+     TRANSLATE FLOW
+  ========================================================= */
+  function handleTranslate(){
+    const text = textInput.value.trim();
+    if(!text) return;
+    addHumanBubble(text);
+    textInput.value = "";
+    autoResize();
+    showTyping();
+
+    const delay = 500 + Math.random()*450;
+    setTimeout(()=>{
+      removeTyping();
+      const { catText, tokens } = translateToCat(text, currentPersonality);
+      const reaction = pickReaction(currentPersonality);
+      const id = addCatBubble(catText, tokens, currentPersonality, reaction);
+      updateHeroMood(true);
+      speak(id);
+    }, delay);
+  }
+
+  sendBtn.addEventListener("click", handleTranslate);
+  textInput.addEventListener("keydown", e=>{
+    if(e.key === "Enter" && !e.shiftKey){
+      e.preventDefault();
+      handleTranslate();
+    }
+  });
+  textInput.addEventListener("input", autoResize);
+  function autoResize(){
+    textInput.style.height = "auto";
+    textInput.style.height = Math.min(90, textInput.scrollHeight) + "px";
+  }
+
+  clearBtn.addEventListener("click", ()=>{
+    speechSynthesis && speechSynthesis.cancel();
+    speakingId = null;
+    history = [];
+    chatEl.querySelectorAll(".msg-row, .typing-row").forEach(n=>n.remove());
+    welcomeMsg.style.display = "block";
+    showToast("History cleared 🧹");
+  });
+
+  /* =========================================================
+     SPEECH SYNTHESIS (cat voice reply)
+  ========================================================= */
+  const synthSupported = "speechSynthesis" in window;
+
+  function randRange([a,b]){ return a + Math.random()*(b-a); }
+
+  function speak(id){
+    if(!synthSupported) return;
+    const entry = history.find(h=>h.id===id);
+    if(!entry) return;
+
+    speechSynthesis.cancel();
+    const p = PERSONALITIES[entry.personality];
+    setSpeakingBubble(id, true);
+
+    entry.tokens.forEach((tok, idx)=>{
+      const utter = new SpeechSynthesisUtterance(tok);
+      utter.pitch = Math.min(2, Math.max(0, randRange(p.pitch)));
+      utter.rate = Math.min(2, Math.max(0.4, randRange(p.rate)));
+      utter.volume = 1;
+      if(idx === entry.tokens.length - 1){
+        utter.onend = ()=> setSpeakingBubble(id, false);
+      }
+      speechSynthesis.speak(utter);
+    });
+    speakingId = id;
+  }
+
+  function setSpeakingBubble(id, on){
+    document.querySelectorAll(".bubble.cat.speaking").forEach(b=> b.classList.remove("speaking"));
+    const bub = $("bubble-" + id);
+    if(bub && on) bub.classList.add("speaking");
+    if(!on && speakingId === id) speakingId = null;
+  }
+
+  function handleMiniAction(act, id){
+    if(!synthSupported && act !== "copy"){
+      showToast("Voice not supported here 😿");
+      return;
+    }
+    const entry = history.find(h=>h.id===id);
+    if(!entry) return;
+
+    if(act === "play"){
+      if(speechSynthesis.paused && speakingId === id){
+        speechSynthesis.resume();
+        setSpeakingBubble(id, true);
+      } else {
+        speak(id);
+      }
+    } else if(act === "pause"){
+      if(speakingId === id) speechSynthesis.pause();
+    } else if(act === "stop"){
+      if(speakingId === id){
+        speechSynthesis.cancel();
+        setSpeakingBubble(id, false);
+      }
+    } else if(act === "replay"){
+      speak(id);
+    } else if(act === "copy"){
+      copyText(entry.catText, id);
+    }
+  }
+
+  function copyText(text, id){
+    const done = ()=>{
+      showToast("Copied to clipboard 📋");
+      const btn = document.querySelector(`.mini-btn[data-act="copy"][data-id="${id}"]`);
+      if(btn){
+        btn.classList.add("copy-ok");
+        btn.textContent = "✔️";
+        setTimeout(()=>{ btn.classList.remove("copy-ok"); btn.textContent = "📋"; }, 1200);
+      }
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(()=> fallbackCopy(text, done));
+    } else {
+      fallbackCopy(text, done);
+    }
+  }
+  function fallbackCopy(text, cb){
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); cb(); }catch(e){ showToast("Couldn't copy 😿"); }
+    document.body.removeChild(ta);
+  }
+
+  /* =========================================================
+     SPEECH RECOGNITION (mic input)
+  ========================================================= */
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const sttSupported = !!SR;
+
+  function initRecognition(){
+    if(!sttSupported) return null;
+    const rec = new SR();
+    rec.continuous = false;
+    rec.interimResults = true;
+    rec.maxAlternatives = 1;
+
+    rec.onstart = ()=>{
+      listening = true;
+      micBtn.classList.add("listening");
+      micBtn.textContent = "⏹️";
+      sttNote.classList.add("live");
+      sttNote.innerHTML = `<span class="rec-dot"></span> Listening…`;
+    };
+    rec.onresult = (e)=>{
+      let interim = "", final = "";
+      for(let i=e.resultIndex; i<e.results.length; i++){
+        const t = e.results[i][0].transcript;
+        if(e.results[i].isFinal) final += t;
+        else interim += t;
+      }
+      textInput.value = (final + interim).trim();
+      autoResize();
+    };
+    rec.onerror = (e)=>{
+      sttNote.classList.remove("live");
+      if(e.error === "not-allowed" || e.error === "service-not-allowed"){
+        sttNote.textContent = "Microphone permission denied.";
+      } else if(e.error === "no-speech"){
+        sttNote.textContent = "Didn't catch that — try again.";
+      } else {
+        sttNote.textContent = "Voice input error: " + e.error;
+      }
+    };
+    rec.onend = ()=>{
+      listening = false;
+      micBtn.classList.remove("listening");
+      micBtn.textContent = "🎤";
+      sttNote.classList.remove("live");
+      if(!sttNote.textContent.includes("denied") && !sttNote.textContent.includes("error")){
+        sttNote.textContent = "";
+      }
+    };
+    return rec;
+  }
+
+  micBtn.addEventListener("click", ()=>{
+    if(!sttSupported){
+      sttNote.textContent = "Voice input isn't supported in this browser — try Chrome.";
+      return;
+    }
+    if(listening){
+      recognition && recognition.stop();
+      return;
+    }
+    recognition = initRecognition();
+    const lang = LANGS.find(l=>l.key===currentLang);
+    recognition.lang = lang.bcp;
+    try{ recognition.start(); }
+    catch(e){ sttNote.textContent = "Couldn't start listening — try again."; }
+  });
+
+  /* =========================================================
+     INIT
+  ========================================================= */
+  function init(){
+    buildChips();
+    updateHeroMood(false);
+    textInput.placeholder = LANGS.find(l=>l.key===currentLang).placeholder;
+
+    if(!sttSupported){
+      micBtn.disabled = true;
+      micBtn.title = "Voice input not supported in this browser";
+    }
+    const notes = [];
+    if(!sttSupported) notes.push("mic input unavailable");
+    if(!synthSupported) notes.push("voice reply unavailable");
+    supportNote.textContent = notes.length
+      ? `This browser: ${notes.join(", ")} — text translation still works fully.`
+      : "Works fully in this browser, including voice in & out. Try Chrome for best support.";
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
+
+
